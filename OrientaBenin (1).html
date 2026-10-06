@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OrientaBénin – Simulateur de classement BAC (Guide MESRS 2026-2027)</title>
+<style>
+*,::before,::after{box-sizing:border-box;border:0 solid #e5e7eb}
+html{line-height:1.5;-webkit-text-size-adjust:100%}
+body{margin:0;line-height:inherit}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{font-size:inherit;font-weight:inherit}
+a{color:inherit;text-decoration:inherit}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:1em}
+button,input,select{font:inherit;color:inherit;margin:0;padding:0}
+button{background:transparent;cursor:pointer}
+[hidden]{display:none}
+:focus-visible{outline:2px solid #047857;outline-offset:2px}
+.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.hidden{display:none}.block{display:block}.flex{display:flex}.grid{display:grid}
+.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}
+.items-center{align-items:center}.items-start{align-items:flex-start}.self-start{align-self:flex-start}
+.justify-between{justify-content:space-between}
+.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}
+.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-5xl{max-width:64rem}.mx-auto{margin-left:auto;margin-right:auto}
+.mb-2{margin-bottom:.5rem}.mt-1{margin-top:.25rem}.mt-2{margin-top:.5rem}.mt-4{margin-top:1rem}
+.p-2{padding:.5rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}
+.px-2{padding-left:.5rem;padding-right:.5rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-8{padding-left:2rem;padding-right:2rem}
+.py-0\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.py-8{padding-top:2rem;padding-bottom:2rem}
+.pt-2{padding-top:.5rem}.pt-4{padding-top:1rem}
+.space-y-2>:not([hidden])~:not([hidden]){margin-top:.5rem}
+.space-y-4>:not([hidden])~:not([hidden]){margin-top:1rem}
+.space-y-6>:not([hidden])~:not([hidden]){margin-top:1.5rem}
+.text-xs{font-size:.75rem;line-height:1rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\[11px\]{font-size:11px}
+.font-semibold{font-weight:600}.font-bold{font-weight:700}.font-extrabold{font-weight:800}
+.leading-snug{line-height:1.375}.text-center{text-align:center}.underline{text-decoration-line:underline}
+.border{border-width:1px}.border-dashed{border-style:dashed}.border-amber-300{border-color:#fcd34d}
+.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}
+.shadow-sm{box-shadow:0 1px 2px 0 rgb(0 0 0/.05)}
+.bg-white{background-color:#fff}.bg-slate-50{background-color:#f8fafc}.bg-slate-900{background-color:#0f172a}
+.bg-amber-50{background-color:#fffbeb}.bg-amber-100{background-color:#fef3c7}
+.bg-emerald-100{background-color:#d1fae5}.bg-emerald-700{background-color:#047857}.bg-emerald-800{background-color:#065f46}
+.bg-sky-100{background-color:#e0f2fe}
+.text-white{color:#fff}.text-slate-500{color:#64748b}.text-slate-600{color:#475569}.text-slate-800{color:#1e293b}
+.text-amber-800{color:#92400e}.text-amber-900{color:#78350f}
+.text-emerald-100{color:#d1fae5}.text-emerald-700{color:#047857}.text-emerald-800{color:#065f46}
+.text-sky-800{color:#075985}.text-red-600{color:#dc2626}
+.hover\:bg-emerald-800:hover{background-color:#065f46}
+@media (min-width:640px){.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.sm\:text-3xl{font-size:1.875rem;line-height:2.25rem}.sm\:w-auto{width:auto}}
+@media (min-width:768px){.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:1024px){.lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased" style="font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif">
+<header class="bg-emerald-800 text-white px-4 py-8 text-center">
+  <h1 class="text-2xl sm:text-3xl font-extrabold">OrientaBénin</h1>
+  <p class="mt-2 text-sm text-emerald-100 max-w-2xl mx-auto">Calcule ta moyenne de classement par filière selon la formule du Guide MESRS 2026-2027 et repère les filières où tu as des bourses à viser.</p>
+</header>
+
+<main class="max-w-5xl mx-auto px-4 py-6 space-y-6">
+  <section class="bg-white rounded-2xl border p-5 shadow-sm">
+    <h2 class="font-bold text-lg">1. Ta série et tes notes</h2>
+    <p class="text-xs text-slate-500 mt-1">Notes sur 20 et coefficients : recopie-les depuis ton relevé de notes du BAC. Les coefficients de la série C et D sont préremplis d'après les exemples du guide.</p>
+    <form id="form" class="mt-4 space-y-4" novalidate>
+      <label class="block text-sm font-semibold" for="serie">Série du BAC</label>
+      <select id="serie" class="w-full border rounded-xl p-3 text-sm bg-slate-50" required></select>
+      <div id="inputs" class="grid sm:grid-cols-2 gap-3"></div>
+      <p id="error" class="text-sm text-red-600 hidden" role="alert"></p>
+      <button id="go" type="submit" class="hidden w-full sm:w-auto bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-8 py-3 rounded-xl">Calculer</button>
+    </form>
+  </section>
+
+  <section id="results" class="hidden space-y-4" aria-live="polite">
+    <div class="bg-amber-50 border border-amber-300 rounded-2xl p-4 text-xs text-amber-900" id="warn"></div>
+    <h2 class="font-bold text-lg">2. Tes 3 meilleures pistes avec bourse</h2>
+    <div id="top3" class="grid md:grid-cols-3 gap-4"></div>
+    <div class="flex flex-wrap items-center justify-between gap-2 pt-2">
+      <h2 class="font-bold text-lg">3. Toutes les filières</h2>
+      <div id="filters" class="flex gap-2 text-xs font-semibold"></div>
+    </div>
+    <p id="count" class="text-xs text-slate-500"></p>
+    <div id="all" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    <h2 class="font-bold text-lg pt-4">4. Filières sur concours</h2>
+    <p class="text-xs text-slate-500">Pour ces filières, l'entrée se fait sur épreuves : ta moyenne du BAC ne sert pas au classement. Consulte les dates et conditions dans le guide.</p>
+    <div id="concours" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+  </section>
+
+  <section class="text-xs text-slate-600 bg-white border rounded-2xl p-5 space-y-2">
+    <h2 class="font-bold text-sm text-slate-800">Comment ça marche</h2>
+    <p><code>M = (m1×x + m2×y + m3×z) / (x + y + z)</code> : m = note, x/y/z = coefficient de la matière dans ta série. Les 3 matières dépendent de la filière (guide MESRS).</p>
+    <p>Le classement est fait <strong>par filière</strong>, de la plus forte à la plus faible moyenne, selon le quota de bourses fixé par arrêté. Aucun seuil fixe n'existe : tes chances dépendent des autres candidats.</p>
+    <p>Ce simulateur est non officiel. Les choix se font uniquement sur <a class="underline text-emerald-700" href="https://apresmonbac.bj" target="_blank" rel="noopener noreferrer">apresmonbac.bj</a>. Vérifie les critères d'éligibilité (décret d'attribution des allocations) et les quotas dans le guide à jour.</p>
+    <p>Couverture : filières par classement des universités publiques (UAC, UP, UNSTIM, UNA) pour les séries générales et quelques séries techniques. Les filières sur concours sont listées sans calcul. DEAT : saisis les 3 matières écrites de ton diplôme. DT : les DT encodés sont IMI, DWM, PM, EAp, CoM, BTP, DPB, OG, MA, FM, CEMS, FC et Électrotech. Hors périmètre : établissements privés et filières à matières variables.</p>
+  </section>
+</main>
+
+<script>
+"use strict";
+/* ============ DONNÉES (source : Guide MESRS 2026-2027, filières par classement) ============
+   Format : établissement | nom:bourses:aides ~ ... | séries:matières ; séries:matières */
+const SUBJECTS = { maths:"Mathématiques", pct:"PCT (SPCT)", svt:"SVT", fr:"Français", ang:"Anglais (LV1)", hg:"Histoire-Géographie", philo:"Philosophie", eco:"Économie", cas:"Étude de cas", mapp:"Mathématiques appliquées (DT)", tsi:"Technologie des systèmes informatiques (DT/IMI)", tcm:"Techn. comptables et mercatique (DT/CoM)", oar:"Organisation et administration des ressources (DT/CoM)", meca:"Mécanique (DT/MA)", cmeca:"Construction mécanique", est:"EST (électronique)", rdm:"RDM (résistance des matériaux)", fab:"Étude de fabrication (E)", dwm:"Sites et applications web (DT/DWM)", sap:"Sciences appliquées (DT/EAp)", eel:"Étude électronique (DT/EAp)", pinf:"Projet informatique (DT/PM)", mont:"Montage (DT/PM)", beton:"Béton armé (F4)", techno:"Technologie (DT/OG)", etech:"Électrotechnique", tfroid:"Technique de froid (DT/FC)", tspec:"Technologie de spécialité (DT/FC)", assain:"Assainissement (EA)", mre:"Mobilisation des ressources en eau (EA)", drt:"DRT (DT/OG)", d1:"DEAT : matière écrite 1", d2:"DEAT : matière écrite 2", d3:"DEAT : matière écrite 3" };
+const KNOWN_COEFS = { C:{ maths:6, pct:5, svt:2 }, D:{ svt:5, pct:4, maths:4 } }; // exemples du guide
+const RAW = `
+UAC · IRSP|Santé publique polyvalente:50:7|C,D:svt,pct,maths
+UAC · FSS|Médecine générale:95:20~Pharmacie:18:10~Kinésithérapie:20:15~Nutrition et diététique:17:15|C,D:maths,pct,svt
+UAC · FSS|Assistance sociale:25:20|A1,A2,B,D:philo,hg,svt
+UAC · FLLAC|Anglais:5:320~Lettres modernes:15:30|A1,A2,B,C,D:ang,fr,hg
+UAC · INMAAC|Administration culturelle:5:20|A1,A2,B,C,D:fr,hg,philo
+UAC · ICV|Gestion du cadre de vie:50:12~Changements climatiques:18:8~Géomatique et environnement:23:12|C,D:maths,fr,hg
+UAC · INE|Hydrologie quantitative:30:5~Hydrogéologie:25:6~Écohydrologie:21:5~Crises eau et climat:35:9~Génie rural et maîtrise de l'eau:20:5~Hydraulique et assainissement:52:10~Eau, hygiène et assainissement:50:10|C,D:maths,pct,svt
+UAC · ENEAM|Réseaux informatiques:77:5~Analyse informatique et programmation:69:5~Planification et gestion de projets:20:10|C,D:maths,fr,ang
+UAC · ENEAM|Gestion financière et comptable:5:20|C,D:maths,fr,ang;G2:cas,fr,ang
+UAC · ENEAM|Marketing:0:10~Gestion des ressources humaines:4:10|B:eco,fr,ang;C,D:maths,fr,ang;G2,G3:cas,fr,ang
+UAC · IFRI|Génie logiciel:23:5~Internet et multimédia:15:3~Intelligence artificielle:25:5~Systèmes embarqués et IoT:15:4~Sécurité informatique:20:3|C,D:maths,ang,fr
+UAC · IMSP|Classes prépa MPSI/PCSI:100:15|C,D,E:maths,pct,fr
+UAC · FSA|Production végétale:24:3~Production animale:24:3~Forêts et parcours:23:5~Génie rural et pêche:23:6~Nutrition et technologie alimentaires:23:4~Agroéconomie:25:2~Entrepreneuriat agricole:25:5|C,D:maths,pct,svt
+UAC · EPAC|Analyse biomédicale:20:5~Technologie alimentaire:19:5~Production et santé animales:35:4~Génie de l'environnement:27:6~Imagerie médicale:20:6|C,D:maths,pct,svt
+UAC · EPAC|Génie civil:40:5~Génie électrique:28:7~Génie mécanique et énergétique:27:7~Génie informatique et télécom:30:5~Génie chimique:17:4~Machinisme agricole:21:3~Génie biomédical:20:3|C,D:maths,pct,ang
+UAC · FASHS|Psychologie:15:125|A1,A2,B,D:maths,svt,fr
+UAC · FADESP|Droit:0:500~Sciences politiques:0:90|A1,A2,B,C,D:fr,ang,hg
+UAC · FASEG|Sciences économiques et gestion:10:700~Comptables et financières:10:5|B:eco,maths,fr;C,D:maths,pct,fr;G2,G3:eco,cas,fr
+UAC · FASEG|Économétrie et statistiques:10:5|C,D:maths,pct,fr
+UAC · FAST|Physique-Chimie:233:405~Énergies renouvelables:100:20|C,D,F2,F3:maths,pct,fr
+UAC · FAST|Mathématiques-Informatique:200:119|C:maths,pct,fr
+UAC · FAST|Sciences de la vie et de la terre:50:120~Génétique et biotechnologies:51:10~Microbiologie alimentaire:50:20~Hydrobiologie appliquée:51:10|C,D:svt,pct,fr
+UP · FA|Production végétale:30:10~Production animale:31:10~Ressources naturelles:31:5~Sociologie et économie rurales:31:10~Nutrition et sciences agroalimentaires:33:5|C,D:maths,pct,svt
+UP · FM|Médecine humaine:100:30|C,D:maths,pct,svt
+UP · ENATSE|Santé publique et surveillance épidémiologique:54:25|C,D:maths,ang,svt
+UP · IUT|Informatique de gestion:35:11~Transports et logistique:15:6|C,D:maths,fr,ang
+UP · FASEG|Analyse et politique économiques:2:20~Économie agricole:5:45~Économie des collectivités:2:20~Économie et finance internationales:3:40~Entrepreneuriat:2:25~Marketing et management:2:15~Finance et comptabilité:10:120|B:eco,fr,ang;C,D:maths,fr,ang;G2,G3:cas,fr,ang
+UP · FDSP|Droit privé:0:270~Droit public:0:170~Sciences politiques et RI:0:60|A1,A2,B,C,D:fr,philo,hg;G1,G2,G3:cas,fr,ang
+UP · FLASH|Anglais:5:210~Géographie et aménagement:0:215~Sociologie-anthropologie:0:250|A1,A2,B,C,D:fr,ang,maths
+UP · FLASH|Lettres modernes:20:220|A1,A2:fr,philo,hg
+UNSTIM · INSTI|Génie civil:50:10~Génie énergétique (ER):24:5~Génie énergétique (froid):25:5~Génie électrique et informatique:25:5~Génie mécanique et productique:52:10|C,D:maths,pct,ang
+UNSTIM · ENSBBA|Biotechnologie médicale:18:10~Biotechnologie pharmaceutique:18:7~Génétique et biotechnologies:35:5~Génie biologique:35:7~Diététique et nutrition:18:5|C,D:svt,pct,maths
+UNSTIM · FAST Natitingou|Mathématiques-Informatique:63:43~Physique-Chimie:47:28|C,D:ang,pct,maths
+UNSTIM · ENSGEP|Froid et climatisation:19:3~Équipements motorisés:19:3|C,D:maths,ang,pct
+UNSTIM · ENSTP|Génie civil:41:4~Géomatique appliquée:36:4~Architecture et urbanisme:39:6~Hydraulique et assainissement:39:6|C,D:maths,ang,pct
+UNA · Écoles|Aquaculture:22:4~Horticulture:31:3~Production végétale et semencière:39:5~Agro-alimentaire et nutrition:35:5~Bio-ressources:29:3~Conditionnement et stockage:30:3~Productions et santé animales:50:3~Finance agricole:20:2~Exploitations agricoles:30:2~Marketing des intrants:30:2~Sociologie rurale:47:5~Foresterie tropicale:19:3|C,D:maths,pct,svt
+UNA · EGR|Agroéquipement:21:4|C,D:maths,pct,ang
+UNA · EGR|Électrification rurale:21:4~Infrastructures rurales:21:3|C,D:maths,pct,fr
+UAC · ENEAM|Réseaux informatiques:77:5~Analyse informatique et programmation:69:5|DT/IMI:mapp,fr,tsi
+UAC · IFRI|Génie logiciel:23:5~Internet et multimédia:15:3~Systèmes embarqués et IoT:15:4~Sécurité informatique:20:3|DT/IMI:mapp,fr,tsi
+UAC · ENEAM|Marketing:0:10~Gestion des ressources humaines:4:10|DT/CoM:tcm,oar,fr
+UAC · FASEG|Sciences économiques et gestion:10:700|DT/CoM:tcm,oar,fr
+UP · FASEG|Marketing et management:2:15|DT/CoM:tcm,oar,fr
+UAC · EPAC|Génie civil:40:5|DT/BTP:maths,pct,fr
+UNSTIM · INSTI|Génie civil:50:10|DT/BTP:maths,pct,rdm
+UNSTIM · INSTI|Maintenance automobile:38:5|F1,F2:maths,pct,cmeca;DT/MA:maths,pct,meca
+UNSTIM · INSTI|Maintenance industrielle:26:5|F1,F2:maths,pct,cmeca;F3:maths,pct,est
+École inter-États · EISMV|Sciences et médecine vétérinaires:10:0|C,D:maths,pct,svt
+UAC · EPAC|Génie civil:40:5|E,F4:maths,pct,fr
+UAC · EPAC|Génie électrique:28:7~Génie biomédical:20:3|E,F2,F3:maths,pct,fr
+UAC · EPAC|Génie mécanique et énergétique:27:7|E,F1:maths,pct,fr
+UAC · EPAC|Génie informatique et télécom:30:5|E,F2:maths,pct,fr
+UAC · EPAC|Génie chimique:17:4|E:maths,pct,fr
+UAC · EPAC|Machinisme agricole:21:3|E,F3:maths,pct,fr
+UAC · IMSP|Classes prépa MPSI/PCSI:100:15|F1,F2,F3,F4:maths,pct,fr
+UAC · IFRI|Génie logiciel:23:5~Internet et multimédia:15:3~Intelligence artificielle:25:5~Systèmes embarqués et IoT:15:4~Sécurité informatique:20:3|E:maths,fab,fr
+UAC · IFRI|Génie logiciel:23:5~Internet et multimédia:15:3|DT/DWM:mapp,fr,dwm
+UAC · IFRI|Internet et multimédia:15:3|DT/PM:pinf,fr,mont
+UAC · IFRI|Systèmes embarqués et IoT:15:4|DT/EAp:sap,fr,eel
+UNSTIM · INSTI|Génie civil:50:10|E:maths,pct,cmeca;F4:maths,pct,beton;DT/DPB:maths,pct,rdm;DT/OG:maths,pct,techno
+UNSTIM · INSTI|Génie énergétique (ER):24:5|E:maths,pct,cmeca;F2:maths,pct,est;F3,DT/Electrotech:maths,pct,etech;DT/EAp:sap,fr,eel
+UNSTIM · INSTI|Génie énergétique (froid):25:5|E:maths,pct,cmeca;F3,DT/Electrotech:maths,pct,etech;DT/FC:maths,tfroid,tspec
+UNSTIM · INSTI|Génie électrique et informatique:25:5|E:maths,pct,cmeca;F3,DT/Electrotech:maths,pct,etech
+UNSTIM · INSTI|Maintenance industrielle:26:5|DT/FC:maths,tfroid,tspec;DT/Electrotech:maths,etech,est
+UNSTIM · INSTI|Génie mécanique et productique:52:10|E,F1,DT/FM:maths,pct,cmeca;DT/MA:maths,pct,meca
+UNSTIM · ENSGEP|Froid et climatisation:19:3|DT/FC:maths,ang,tfroid
+UNSTIM · ENSGEP|Équipements motorisés:19:3|DT/MA:maths,ang,meca;DT/FM:maths,ang,cmeca
+UNSTIM · ENSTP|Génie civil:41:4~Hydraulique et assainissement:39:6|E:maths,fr,pct;F4:maths,fr,rdm;EA:maths,ang,assain
+UNSTIM · ENSTP|Génie civil:41:4|DT/BTP:maths,ang,rdm
+UNSTIM · ENSTP|Géomatique appliquée:36:4~Architecture et urbanisme:39:6|F4:maths,fr,rdm;DT/BTP:maths,ang,rdm;DT/OG:maths,ang,techno
+UNA · EGR|Agroéquipement:21:4|E,F1,DT/FM,DT/CEMS:maths,pct,cmeca;F2:maths,pct,est;F3,DT/Electrotech:maths,pct,etech;DT/MA:maths,pct,meca
+UNA · EGR|Électrification rurale:21:4|E,F1:maths,pct,fr;F2:maths,pct,est;F3,DT/Electrotech:maths,pct,etech;DT/EAp:sap,fr,eel
+UNA · EGR|Infrastructures rurales:21:3|E,F1:maths,pct,fr;F4,DT/BTP,DT/DPB:maths,pct,rdm;EA:maths,pct,mre;DT/OG:maths,pct,drt
+`;
+
+/* Filières sur CONCOURS (guide 2026-2027) : admission sur épreuves, pas de calcul de moyenne.
+   Format : établissement | nom:quota bourses ~ … | séries | épreuves */
+const RAW_CONCOURS = `
+UAC · INeMES|Sciences infirmières:40~Sciences obstétricales:40|C,D|PCT, SVT
+UAC · ENSTIC|Journalisme:15~Métiers de l'audiovisuel et du multimédia:15|A1,A2,B,C,D,G1,G2,G3|Culture générale, Histoire-Géographie
+UAC · INEPS|Éducation physique et sportive:35~Entraînement sportif:25|A1,A2,B,C,D|Culture générale, SVT, pratique EPS
+UAC · ENS Porto-Novo|Histoire-Géographie:50~Espagnol:50~Allemand:50~Philosophie:50~Anglais:15~Français:15|A1,A2,B,C,D|Culture générale, commentaire de texte
+UAC · ENEAM|Statistique économique et sectorielle:20~Statistique démographique et sociale:20|C,D|Culture générale, Mathématiques
+UP · IFSIO|Soins infirmiers:50~Soins obstétricaux:50|C,D|PCT, SVT
+UP · ENSPD|Statistiques appliquées:15~Planification et suivi-évaluation:20|C,D|Culture générale, Mathématiques
+UNSTIM · ENS Natitingou|Mathématiques et informatique:41~PCT:20~SVT:15|C,D|Culture générale + matière de la filière
+UNSTIM · INSPEI|Sciences et techniques de l'ingénieur (classe prépa):83|C,D,E|PCT, Mathématiques
+UNSTIM · ENSET|Comptabilité:90|B,C,D,G2,G3,DT/CoM|Culture générale + matière de spécialité
+UNSTIM · ENSET|Électrotechnique:25~Énergies renouvelables:27|C,D,F2,F3|Culture générale + PCT ou spécialité
+UNSTIM · ENSET|Génie civil:27|C,D,F4,DT/BTP|Culture générale + PCT ou RDM
+UNSTIM · ENSET|Mécanique automobile:24|C,D,F2,DT/MA|Culture générale + PCT ou spécialité
+UNSTIM · ENSET|Fabrication mécanique:21|C,D,E,F1|Culture générale + PCT ou RDM
+UNSTIM · ENSET|Électronique:70|C,D,F2|Culture générale + PCT ou EST
+UNSTIM · ENSET|Production végétale:90~Production animale:11|C,D,DEAT|Culture générale + SVT/PCT ou spécialité agricole
+IUEP|Métiers de l'agriculture:50|C,D,DEAT|Culture générale, SVT ou agriculture générale
+École inter-États · EAMAU|Architecture et urbanisme:60|C,D|Voir l'école (concours)
+École inter-États · ESMT|Télécommunications et multimédia:15|C,D|Voir l'école (concours)
+`;
+
+/* ============ LOGIQUE PURE (testable) ============ */
+const round2 = x => Math.round((x + Number.EPSILON) * 100) / 100;
+
+function parseData(raw) {
+  return raw.trim().split("\n").flatMap(line => {
+    const [etab, names, groups] = line.split("|");
+    const g = groups.split(";").map(x => { const [s, m] = x.split(":"); return { series: s.split(","), mats: m.split(",") }; });
+    return names.split("~").map(n => { const [nom, b, a] = n.split(":"); return { etab, nom, bourse: +b, aide: +a, groups: g, faculte: /^(UAC|UP|UNSTIM) · F/.test(etab) }; });
+  });
+}
+const DEAT_PREFIXES = ["UP · FA", "UNA · Écoles"];
+const DEAT_KEYS = new Set(["UAC · INE|Crises eau et climat","UAC · INE|Génie rural et maîtrise de l'eau","UAC · INE|Eau, hygiène et assainissement","UAC · FSA|Production végétale","UAC · FSA|Production animale","UAC · FSA|Forêts et parcours","UAC · FSA|Génie rural et pêche","UAC · FSA|Nutrition et technologie alimentaires","UAC · EPAC|Technologie alimentaire","UAC · EPAC|Production et santé animales","UAC · EPAC|Génie de l'environnement","UAC · EPAC|Machinisme agricole","UAC · FAST|Microbiologie alimentaire","UAC · FAST|Hydrobiologie appliquée","UP · FLASH|Anglais","UP · FLASH|Géographie et aménagement","UP · FLASH|Sociologie-anthropologie","UNA · EGR|Agroéquipement","UNA · EGR|Infrastructures rurales"]);
+/** DEAT : le guide retient « toutes les trois matières écrites » du diplôme. */
+function withDeat(f) {
+  if (!f.groups.some(g => g.series.includes("C"))) return f;
+  if (!(DEAT_PREFIXES.includes(f.etab) || DEAT_KEYS.has(f.etab + "|" + f.nom))) return f;
+  return { ...f, groups: [...f.groups, { series: ["DEAT"], mats: ["d1", "d2", "d3"] }] };
+}
+const FILIERES = parseData(RAW).map(withDeat);
+const CONCOURS = RAW_CONCOURS.trim().split("\n").flatMap(line => {
+  const [etab, names, series, epreuves] = line.split("|");
+  return names.split("~").map(n => { const [nom, quota] = n.split(":"); return { etab, nom, quota: +quota, series: series.split(","), epreuves }; });
+});
+const SERIES = [...new Set([...FILIERES.flatMap(f => f.groups.flatMap(g => g.series)), ...CONCOURS.flatMap(c => c.series)])].sort();
+const serieLabel = x => x === "DEAT" ? "DEAT (diplôme d'enseignement agricole/technique)" : (x.startsWith("DT/") ? "Diplôme de technicien " + x : serieLabel(x));
+const concoursFor = serie => CONCOURS.filter(c => c.series.includes(serie));
+
+const matsFor = (f, serie) => (f.groups.find(g => g.series.includes(serie)) || {}).mats || null;
+const neededSubjects = serie => [...new Set(FILIERES.flatMap(f => matsFor(f, serie) || []))];
+
+/** M = Σ(note×coef) / Σ(coef). inputs = { matière: { note, coef } } → null si donnée manquante. */
+function weightedAverage(mats, inputs) {
+  let num = 0, den = 0;
+  for (const m of mats) {
+    const i = inputs[m];
+    if (!i || !Number.isFinite(i.note) || !Number.isFinite(i.coef) || i.coef <= 0) return null;
+    num += i.note * i.coef; den += i.coef;
+  }
+  return den > 0 ? round2(num / den) : null;
+}
+
+function computeResults(serie, inputs) {
+  return FILIERES.flatMap(f => {
+    const mats = matsFor(f, serie);
+    const avg = mats && weightedAverage(mats, inputs);
+    if (avg === null || avg === undefined) return [];
+    return [{ ...f, mats, avg, type: f.bourse > 0 ? "BOURSE" : "AIDE" }];
+  }).sort((a, b) => b.avg - a.avg || b.bourse - a.bourse);
+}
+
+/** Top 3 des filières à bourse ; le guide recommande ≥ 1 faculté classique parmi les 3 choix. */
+function pickTop3(results) {
+  const pool = results.filter(r => r.bourse > 0);
+  const top = pool.slice(0, 3);
+  let swapped = false;
+  if (top.length === 3 && !top.some(r => r.faculte)) {
+    const fac = pool.find(r => r.faculte);
+    if (fac) { top[2] = fac; swapped = true; }
+  }
+  return { top, swapped };
+}
+
+/* ============ TESTS (ouvrir la page avec ?test) ============ */
+function runTests() {
+  const eq = (a, b, msg) => console.assert(a === b, `ÉCHEC ${msg}: ${a} ≠ ${b}`);
+  eq(weightedAverage(["svt","maths","pct"], { svt:{note:12,coef:5}, maths:{note:14,coef:4}, pct:{note:10,coef:4} }), 12, "Médecine BAC D");
+  eq(weightedAverage(["maths"], { maths:{note:NaN,coef:2} }), null, "note invalide");
+  eq(weightedAverage(["maths"], {}), null, "donnée absente");
+  eq(round2(15.749999999), 15.75, "arrondi");
+  console.assert(SERIES.length > 0 && FILIERES.every(f => f.groups.every(g => g.mats.length === 3 && g.mats.every(m => SUBJECTS[m]))), "ÉCHEC cohérence des données");
+  eq(weightedAverage(["d1","d2","d3"], { d1:{note:10,coef:1}, d2:{note:12,coef:1}, d3:{note:14,coef:1} }), 12, "DEAT");
+  console.assert(FILIERES.some(f => matsFor(f, "DEAT")) && FILIERES.some(f => matsFor(f, "DT/IMI")) && FILIERES.some(f => matsFor(f, "F1")), "ÉCHEC DT/DEAT/F1");
+  console.assert(CONCOURS.length > 0 && CONCOURS.every(c => c.quota >= 0 && c.series.length), "ÉCHEC concours");
+  SERIES.forEach(sr => {
+    const keys = FILIERES.filter(f => matsFor(f, sr)).map(f => f.etab + "|" + f.nom);
+    console.assert(new Set(keys).size === keys.length, "ÉCHEC doublon de filière pour la série " + sr);
+    console.assert(CONCOURS.some(c => c.series.includes(sr)) || keys.length > 0, "ÉCHEC série vide " + sr);
+  });
+  console.log("Tests OrientaBénin terminés");
+}
+
+/* ============ UI (DOM construit sans innerHTML) ============ */
+const $ = id => document.getElementById(id);
+function el(tag, cls, text, kids) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text !== undefined && text !== null) n.textContent = text;
+  (kids || []).forEach(k => n.appendChild(k));
+  return n;
+}
+let state = { results: [], filter: "ALL" };
+
+function buildSeriesSelect() {
+  const s = $("serie");
+  s.appendChild(el("option", "", "-- Choisis ta série --")).value = "";
+  SERIES.forEach(x => { const o = el("option", "", "Série " + x); o.value = x; s.appendChild(o); });
+}
+
+function renderInputs() {
+  const serie = $("serie").value, box = $("inputs");
+  box.replaceChildren();
+  $("go").classList.toggle("hidden", !serie);
+  if (!serie) return;
+  neededSubjects(serie).forEach(m => {
+    const note = el("input", "w-full border rounded-lg p-2 text-sm text-center"); Object.assign(note, { type:"number", min:0, max:20, step:"any", id:"n_"+m, required:true, placeholder:"Note /20", inputMode:"decimal" });
+    const coef = el("input", "w-full border rounded-lg p-2 text-sm text-center"); Object.assign(coef, { type:"number", min:1, step:1, id:"c_"+m, required:true, placeholder:"Coef.", inputMode:"numeric" });
+    const known = (KNOWN_COEFS[serie] || {})[m]; if (known) coef.value = known;
+    box.appendChild(el("div", "bg-slate-50 border rounded-xl p-3", null, [
+      el("label", "block text-xs font-bold mb-2", SUBJECTS[m]),
+      el("div", "grid grid-cols-2 gap-2", null, [note, coef])
+    ]));
+  });
+}
+
+function readInputs(serie) {
+  const inputs = {}; let bad = null;
+  neededSubjects(serie).forEach(m => {
+    const note = parseFloat($("n_"+m).value.replace(",", ".")), coef = parseFloat($("c_"+m).value);
+    if (!(note >= 0 && note <= 20)) bad = `Note invalide en ${SUBJECTS[m]} (entre 0 et 20).`;
+    else if (!(coef >= 1)) bad = `Coefficient manquant en ${SUBJECTS[m]} (voir ton relevé).`;
+    inputs[m] = { note, coef };
+  });
+  return { inputs, bad };
+}
+
+function card(r, rank) {
+  const badge = r.type === "BOURSE" ? ["Bourse possible", "bg-emerald-100 text-emerald-800"] : ["Aide universitaire", "bg-amber-100 text-amber-800"];
+  return el("article", "bg-white border rounded-2xl p-4 flex flex-col gap-2 shadow-sm", null, [
+    el("div", "flex justify-between items-start gap-2", null, [
+      el("span", "text-[11px] font-bold px-2 py-0.5 rounded-full " + badge[1], (rank ? rank + " · " : "") + badge[0]),
+      el("span", "text-sm font-extrabold text-emerald-700", r.avg.toFixed(2) + " / 20")
+    ]),
+    el("h3", "font-bold leading-snug", r.nom),
+    el("p", "text-xs text-slate-500", r.etab),
+    el("p", "text-xs", `Quota : ${r.bourse} bourse(s) · ${r.aide} aide(s)/payant`),
+    el("p", "text-[11px] text-slate-500", "Matières : " + r.mats.map(m => SUBJECTS[m]).join(", "))
+  ]);
+}
+
+function concoursCard(c) {
+  return el("article", "bg-white border border-dashed rounded-2xl p-4 flex flex-col gap-2", null, [
+    el("span", "self-start text-[11px] font-bold px-2 py-0.5 rounded-full bg-sky-100 text-sky-800", "Concours"),
+    el("h3", "font-bold leading-snug", c.nom),
+    el("p", "text-xs text-slate-500", c.etab),
+    el("p", "text-xs", "Quota de bourses : " + c.quota),
+    el("p", "text-[11px] text-slate-500", "Épreuves : " + c.epreuves)
+  ]);
+}
+
+function renderAll() {
+  const list = state.results.filter(r => state.filter === "ALL" || r.type === state.filter);
+  $("count").textContent = `${state.results.length} filières analysées pour ta série · ${list.length} affichée(s).`;
+  $("all").replaceChildren(...(list.length ? list.map(r => card(r)) : [el("p", "text-sm text-slate-500", "Aucune filière pour ce filtre.")]));
+  [...$("filters").children].forEach(b => b.className = "px-3 py-1.5 rounded-lg border " + (b.dataset.f === state.filter ? "bg-slate-900 text-white" : "bg-white"));
+  [...$("filters").children].forEach(b => b.setAttribute("aria-pressed", String(b.dataset.f === state.filter)));
+}
+
+function onSubmit(e) {
+  e.preventDefault();
+  const serie = $("serie").value, err = $("error");
+  if (!serie) return;
+  const { inputs, bad } = readInputs(serie);
+  err.classList.toggle("hidden", !bad); err.textContent = bad || "";
+  if (bad) return;
+  state = { results: computeResults(serie, inputs), filter: "ALL" };
+  const { top, swapped } = pickTop3(state.results);
+  $("top3").replaceChildren(...(top.length ? top.map((r, i) => card(r, ["1er", "2e", "3e"][i])) : [el("p", "text-sm", "Aucune filière à bourse pour cette série dans les données.")]));
+  $("warn").textContent = "Indicatif : le classement réel dépend des autres candidats et du quota de chaque filière. Ces moyennes montrent où tes notes pèsent le plus." + (swapped ? " Le 3e choix est une faculté classique, comme le recommande le guide (au moins une faculté parmi les 3 choix)." : "");
+  renderAll();
+  const cc = concoursFor(serie);
+  $("concours").replaceChildren(...(cc.length ? cc.map(concoursCard) : [el("p", "text-sm text-slate-500", "Aucune filière sur concours pour cette série dans les données.")]));
+  if (serie === "DEAT" || serie.startsWith("DT/")) $("warn").textContent += " Vérifie que ton option de diplôme technique est admise pour chaque filière dans le guide : seules certaines options sont retenues.";
+  $("results").classList.remove("hidden");
+  $("results").scrollIntoView({ behavior: "smooth" });
+}
+
+function init() {
+  buildSeriesSelect();
+  [["ALL","Toutes"],["BOURSE","Bourse"],["AIDE","Aide"]].forEach(([f, t]) => {
+    const b = el("button", "", t); b.type = "button"; b.dataset.f = f;
+    b.addEventListener("click", () => { state.filter = f; renderAll(); });
+    $("filters").appendChild(b);
+  });
+  $("serie").addEventListener("change", () => { $("results").classList.add("hidden"); renderInputs(); });
+  $("form").addEventListener("submit", onSubmit);
+  if (location.search.includes("test")) runTests();
+}
+init();
+</script>
+</body>
+</html>
